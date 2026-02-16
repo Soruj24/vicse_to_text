@@ -3,18 +3,36 @@
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { useSpeechToText } from "./useSpeechToText";
+import { jsPDF } from "jspdf";
+
+export interface HistoryItem {
+  id: string;
+  text: string;
+  date: string;
+  language: string;
+}
 
 export function useSpeechToTextManager() {
   const [convertedText, setConvertedText] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en-US");
   const [isMounted, setIsMounted] = useState(false);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
 
   // Load from local storage on mount
   useEffect(() => {
     const savedText = localStorage.getItem("voice_transcript");
     const savedLang = localStorage.getItem("voice_lang");
+    const savedHistory = localStorage.getItem("voice_history");
+    
     if (savedText) setConvertedText(savedText);
     if (savedLang) setSelectedLanguage(savedLang);
+    if (savedHistory) {
+      try {
+        setHistory(JSON.parse(savedHistory));
+      } catch (e) {
+        console.error("Failed to parse history", e);
+      }
+    }
     setIsMounted(true);
   }, []);
 
@@ -30,6 +48,40 @@ export function useSpeechToTextManager() {
       localStorage.setItem("voice_lang", selectedLanguage);
     }
   }, [selectedLanguage, isMounted]);
+
+  const addToHistory = useCallback((text: string) => {
+    if (!text.trim()) return;
+    
+    const newItem: HistoryItem = {
+      id: Date.now().toString(),
+      text,
+      date: new Date().toISOString(),
+      language: selectedLanguage,
+    };
+    
+    setHistory((prev) => {
+      const newHistory = [newItem, ...prev].slice(0, 50); // Keep last 50 items
+      localStorage.setItem("voice_history", JSON.stringify(newHistory));
+      return newHistory;
+    });
+    
+    toast.success("Saved to history");
+  }, [selectedLanguage]);
+
+  const clearHistory = useCallback(() => {
+    setHistory([]);
+    localStorage.removeItem("voice_history");
+    toast.success("History cleared");
+  }, []);
+
+  const deleteHistoryItem = useCallback((id: string) => {
+    setHistory((prev) => {
+      const newHistory = prev.filter(item => item.id !== id);
+      localStorage.setItem("voice_history", JSON.stringify(newHistory));
+      return newHistory;
+    });
+    toast.success("Item removed from history");
+  }, []);
 
   const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
   const [recordingDuration, setRecordingDuration] = useState<number>(0);
@@ -110,14 +162,41 @@ export function useSpeechToTextManager() {
     a.click();
     URL.revokeObjectURL(url);
     toast.success("File downloaded successfully");
-  }, [convertedText, transcript]);
+    
+    // Also add to history when saving
+    addToHistory(textToSave);
+  }, [displayText, addToHistory]);
+
+  const handleExportPDF = useCallback(() => {
+    const textToSave = displayText;
+    if (!textToSave.trim()) {
+      toast.error("No text to export");
+      return;
+    }
+    try {
+      const doc = new jsPDF();
+      const splitText = doc.splitTextToSize(textToSave, 180);
+      doc.text(splitText, 10, 10);
+      doc.save(`transcript-${new Date().getTime()}.pdf`);
+      toast.success("PDF exported successfully");
+      
+      // Also add to history when exporting
+      addToHistory(textToSave);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to export PDF");
+    }
+  }, [displayText, addToHistory]);
 
   const handleClearText = useCallback((): void => {
+    if (displayText.trim()) {
+      addToHistory(displayText); // Auto-save to history before clearing
+    }
     setConvertedText("");
     resetTranscript();
     setShowClearDialog(false);
     toast.success("All text cleared");
-  }, [resetTranscript]);
+  }, [displayText, addToHistory, resetTranscript]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -130,11 +209,15 @@ export function useSpeechToTextManager() {
         e.preventDefault();
         handleCopyText();
       }
+      if (e.ctrlKey && e.code === "KeyS") {
+        e.preventDefault();
+        handleSaveText();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [toggleListening, handleCopyText]);
+  }, [toggleListening, handleCopyText, handleSaveText]);
 
   // Recording timer
   useEffect(() => {
@@ -183,9 +266,14 @@ export function useSpeechToTextManager() {
     confidence,
     displayText,
     wordCount,
+    history,
     toggleListening,
     handleCopyText,
     handleSaveText,
+    handleExportPDF,
     handleClearText,
+    addToHistory,
+    deleteHistoryItem,
+    clearHistory,
   };
 }

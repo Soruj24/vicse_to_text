@@ -23,36 +23,36 @@ export function SessionStats({
   };
 
   return (
-    <Card className="hidden lg:block shadow-xl border-border/40 overflow-hidden rounded-3xl">
-      <CardHeader className="pb-3 bg-secondary/30 py-5 px-6">
+    <Card className="hidden lg:block shadow-xl border-white/5 overflow-hidden rounded-3xl bg-white/40 dark:bg-black/20 backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/10">
+      <CardHeader className="pb-3 bg-white/5 py-5 px-6 border-b border-white/5">
         <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80 flex items-center gap-3">
           <Timer className="w-4 h-4 text-primary" />
           Session Stats
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6 p-6">
-        <div className="flex justify-between items-center">
-          <span className="text-muted-foreground font-medium">Word Count</span>
+        <div className="flex justify-between items-center group">
+          <span className="text-muted-foreground font-medium group-hover:text-foreground transition-colors">Word Count</span>
           <Badge
             variant="secondary"
-            className="px-4 py-1.5 font-mono text-lg bg-primary/10 text-primary border-none rounded-lg"
+            className="px-4 py-1.5 font-mono text-lg bg-primary/10 text-primary border-none rounded-lg group-hover:bg-primary/20 transition-colors"
           >
             {wordCount}
           </Badge>
         </div>
-        <div className="flex justify-between items-center">
-          <span className="text-muted-foreground font-medium">Time</span>
-          <span className="font-mono font-bold text-xl">{formatDuration(recordingDuration)}</span>
+        <div className="flex justify-between items-center group">
+          <span className="text-muted-foreground font-medium group-hover:text-foreground transition-colors">Time</span>
+          <span className="font-mono font-bold text-xl text-foreground/80 group-hover:text-foreground transition-colors">{formatDuration(recordingDuration)}</span>
         </div>
         {confidence > 0 && (
-          <div className="space-y-4 pt-4 border-t border-border/50">
+          <div className="space-y-4 pt-4 border-t border-white/10">
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground font-medium">Accuracy</span>
               <span className="font-mono font-bold text-primary text-lg">
                 {Math.round(confidence * 100)}%
               </span>
             </div>
-            <div className="w-full h-2.5 bg-secondary rounded-full overflow-hidden">
+            <div className="w-full h-2.5 bg-secondary/50 rounded-full overflow-hidden">
               <div
                 className={`h-full transition-all duration-1000 ease-out ${
                   confidence > 0.8

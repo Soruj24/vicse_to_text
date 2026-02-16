@@ -1,8 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Languages, CheckCircle2 } from "lucide-react";
+import { Languages } from "lucide-react";
 
 export const languages = [
   { code: "en-US", name: "English", flag: "🇺🇸" },
@@ -24,37 +30,33 @@ export function LanguageSelector({
   isListening,
 }: LanguageSelectorProps) {
   return (
-    <Card className="shadow-xl border-border/40 overflow-hidden rounded-2xl md:rounded-3xl">
-      <CardHeader className="pb-3 bg-secondary/30 py-3 md:py-5 px-4 md:px-6">
+    <Card className="shadow-xl border-white/5 overflow-hidden rounded-2xl md:rounded-3xl bg-white/40 dark:bg-black/20 backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/10">
+      <CardHeader className="pb-3 bg-white/5 py-3 md:py-5 px-4 md:px-6 border-b border-white/5">
         <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80 flex items-center gap-2 md:gap-3">
           <Languages className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary" />
           Select Language
         </CardTitle>
       </CardHeader>
       <CardContent className="p-3 md:p-5">
-        <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-2.5 pb-2 lg:pb-0 scrollbar-hide snap-x">
-          {languages.map((lang) => (
-            <Button
-              key={lang.code}
-              variant={selectedLanguage === lang.code ? "default" : "outline"}
-              className={`flex-shrink-0 lg:w-full justify-start gap-3 md:gap-4 h-11 md:h-14 rounded-xl md:rounded-2xl transition-all duration-300 snap-start border-2 ${
-                selectedLanguage === lang.code
-                  ? "shadow-lg shadow-primary/25 border-primary scale-[1.02]"
-                  : "hover:bg-secondary/80 border-transparent bg-secondary/20"
-              }`}
-              onClick={() => setSelectedLanguage(lang.code)}
-              disabled={isListening}
-              aria-label={`Select ${lang.name} language`}
-              aria-pressed={selectedLanguage === lang.code}
-            >
-              <span className="text-xl md:text-2xl">{lang.flag}</span>
-              <span className="text-sm md:text-base font-semibold">{lang.name}</span>
-              {selectedLanguage === lang.code && (
-                <CheckCircle2 className="hidden md:block w-4 h-4 text-primary-foreground ml-auto" />
-              )}
-            </Button>
-          ))}
-        </div>
+        <Select
+          value={selectedLanguage}
+          onValueChange={setSelectedLanguage}
+          disabled={isListening}
+        >
+          <SelectTrigger className="w-full h-12 rounded-xl text-base font-medium bg-background/50 border-white/10 hover:bg-background/80 transition-colors focus:ring-primary/20">
+            <SelectValue placeholder="Select Language" />
+          </SelectTrigger>
+          <SelectContent className="bg-background/95 backdrop-blur-xl border-white/10">
+            {languages.map((lang) => (
+              <SelectItem key={lang.code} value={lang.code} className="cursor-pointer focus:bg-primary/10 focus:text-primary">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl">{lang.flag}</span>
+                  <span className="font-medium">{lang.name}</span>
+                </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </CardContent>
     </Card>
   );
