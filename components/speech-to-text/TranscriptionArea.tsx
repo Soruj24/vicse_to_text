@@ -13,7 +13,6 @@ import {
 import { Mic, Copy, Trash2, Volume2, VolumeX } from "lucide-react";
 import { AIToolbar } from "./AIToolbar";
 import { AudioVisualizer } from "./AudioVisualizer";
-import { StatsDisplay } from "./StatsDisplay";
 import { motion } from "framer-motion";
 
 interface TranscriptionAreaProps {
@@ -73,14 +72,6 @@ export function TranscriptionArea({
     <div className="space-y-4">
       <div className="flex flex-col xl:flex-row gap-4 items-start xl:items-center justify-between">
         <AIToolbar text={displayText} onTextUpdate={setConvertedText} />
-        {displayText.trim() && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <StatsDisplay text={displayText} />
-          </motion.div>
-        )}
       </div>
       
       <motion.div
