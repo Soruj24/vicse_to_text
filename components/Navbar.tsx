@@ -40,6 +40,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <Link href="#tool">
             <Button size="sm" className="rounded-full px-6 font-semibold shadow-lg shadow-primary/20 bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-700 transition-all hover:scale-105 active:scale-95 text-white border-0">
               Get Started
