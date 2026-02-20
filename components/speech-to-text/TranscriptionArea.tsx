@@ -10,10 +10,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mic, Copy, Trash2, Volume2, VolumeX, Clock, Type, AlignLeft } from "lucide-react";
+import { Mic, Copy, Trash2, Volume2, VolumeX, Clock, Type, AlignLeft, ArrowDown } from "lucide-react";
 import { AIToolbar } from "./AIToolbar";
 import { AudioVisualizer } from "./AudioVisualizer";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface TranscriptionAreaProps {
   displayText: string;
@@ -41,12 +41,38 @@ export function TranscriptionArea({
   const charCount = displayText.length;
   const readingTime = Math.ceil(wordCount / 200); // approx 200 wpm
 
+  const [autoScroll, setAutoScroll] = useState(true);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
   // Auto-scroll effect
   useEffect(() => {
-    if (textareaRef.current && isListening) {
+    if (textareaRef.current && autoScroll) {
       textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
     }
-  }, [displayText, isListening]);
+  }, [displayText, autoScroll]);
+
+  const handleScroll = () => {
+    if (!textareaRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = textareaRef.current;
+    // Check if user is near bottom (within 50px)
+    const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
+
+    if (!isAtBottom && autoScroll) {
+      setAutoScroll(false);
+      setShowScrollButton(true);
+    } else if (isAtBottom && !autoScroll) {
+      setAutoScroll(true);
+      setShowScrollButton(false);
+    }
+  };
+
+  const scrollToBottom = () => {
+    setAutoScroll(true);
+    setShowScrollButton(false);
+    if (textareaRef.current) {
+      textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+    }
+  };
 
   // Handle Text-to-Speech
   const handleSpeak = () => {
@@ -100,9 +126,9 @@ export function TranscriptionArea({
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           
-          <div className="relative min-h-[60vh] flex flex-col">
+          <div className="relative h-[60vh] flex flex-col">
             {/* Visualizer at the top, subtle */}
-            <div className="h-16 w-full opacity-70">
+            <div className="h-16 w-full opacity-70 flex-shrink-0">
               <AudioVisualizer isListening={isListening} />
             </div>
             
@@ -110,12 +136,34 @@ export function TranscriptionArea({
               ref={textareaRef}
               value={displayText}
               onChange={(e) => setConvertedText(e.target.value)}
+              onScroll={handleScroll}
               placeholder="Start speaking or typing..."
-              className="flex-1 text-lg md:text-xl resize-none border-0 focus-visible:ring-0 p-8 md:p-10 pb-20 leading-relaxed placeholder:text-muted-foreground/40 font-normal bg-transparent scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 transition-colors selection:bg-primary/20 selection:text-primary"
+              className="flex-1 h-full text-lg md:text-xl resize-none border-0 focus-visible:ring-0 p-8 md:p-10 pb-40 leading-relaxed placeholder:text-muted-foreground/40 font-normal bg-transparent scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 transition-colors selection:bg-primary/20 selection:text-primary"
               aria-label="Transcription output"
               aria-live="polite"
               spellCheck={false}
             />
+
+            {/* Scroll to Bottom Button */}
+            <AnimatePresence>
+              {showScrollButton && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute bottom-20 right-6 z-10"
+                >
+                  <Button
+                    size="sm"
+                    onClick={scrollToBottom}
+                    className="rounded-full h-8 px-3 gap-2 bg-primary/90 hover:bg-primary shadow-lg backdrop-blur-sm text-xs font-medium"
+                  >
+                    <ArrowDown className="w-3 h-3" />
+                    Auto Scroll
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Status Bar & Actions */}
             <div className="absolute bottom-0 left-0 right-0 h-14 bg-white/40 dark:bg-black/40 backdrop-blur-md border-t border-white/10 flex items-center justify-between px-6 transition-transform duration-300 transform translate-y-0">

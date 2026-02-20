@@ -104,7 +104,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
       </div>
 
       <motion.div variants={item}>
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
@@ -269,7 +269,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
       </motion.div>
 
       <motion.div variants={item}>
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
@@ -300,7 +300,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
       </motion.div>
 
       <motion.div variants={item}>
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"

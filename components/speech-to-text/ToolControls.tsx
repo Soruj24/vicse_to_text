@@ -130,7 +130,7 @@ export function ToolControls({
           </DropdownMenu>
 
           {/* Share Dropdown */}
-          <DropdownMenu>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" disabled={!hasText} className="rounded-xl h-9 px-3 gap-2 font-medium text-xs md:text-sm hover:bg-primary/10 hover:text-primary">
                 <Share2 className="w-4 h-4" />
