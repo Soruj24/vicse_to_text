@@ -100,6 +100,7 @@ export function SpeechToText() {
             isListening={isListening}
             handleCopyText={handleCopyText}
             setShowClearDialog={setShowClearDialog}
+            language={selectedLanguage}
           />
 
           <ToolControls

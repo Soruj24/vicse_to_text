@@ -29,8 +29,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
     setIsLoading(action);
     
     try {
-      // Simulate progress or just wait for response
-      const response = await fetch("/api/gemini", {
+      const response = await fetch("/api/groq", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

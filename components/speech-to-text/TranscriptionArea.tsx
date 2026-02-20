@@ -21,6 +21,7 @@ interface TranscriptionAreaProps {
   isListening: boolean;
   handleCopyText: () => void;
   setShowClearDialog: (show: boolean) => void;
+  language: string;
 }
 
 export function TranscriptionArea({
@@ -29,6 +30,7 @@ export function TranscriptionArea({
   isListening,
   handleCopyText,
   setShowClearDialog,
+  language,
 }: TranscriptionAreaProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -54,7 +56,17 @@ export function TranscriptionArea({
     const utterance = new SpeechSynthesisUtterance(displayText);
     utterance.onend = () => setIsPlaying(false);
     utterance.onerror = () => setIsPlaying(false);
-    utterance.lang = 'en-US'; 
+    // Use selected language for TTS (Bangla supported via bn-BD/bn-IN)
+    utterance.lang = language || 'en-US';
+    // Try to pick a matching voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const langPrefix = (language || 'en-US').split('-')[0];
+    const voice =
+      voices.find(v => v.lang === language) ||
+      voices.find(v => v.lang.toLowerCase().startsWith(langPrefix.toLowerCase())) ||
+      voices.find(v => v.default) ||
+      voices[0];
+    if (voice) utterance.voice = voice;
     
     speechRef.current = utterance;
     window.speechSynthesis.speak(utterance);
