@@ -10,7 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Mic, Copy, Trash2, Volume2, VolumeX } from "lucide-react";
+import { Mic, Copy, Trash2, Volume2, VolumeX, Clock, Type, AlignLeft } from "lucide-react";
 import { AIToolbar } from "./AIToolbar";
 import { AudioVisualizer } from "./AudioVisualizer";
 import { motion } from "framer-motion";
@@ -35,6 +35,11 @@ export function TranscriptionArea({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  // Calculate stats
+  const wordCount = displayText.trim() ? displayText.trim().split(/\s+/).length : 0;
+  const charCount = displayText.length;
+  const readingTime = Math.ceil(wordCount / 200); // approx 200 wpm
 
   // Auto-scroll effect
   useEffect(() => {
@@ -106,70 +111,89 @@ export function TranscriptionArea({
               value={displayText}
               onChange={(e) => setConvertedText(e.target.value)}
               placeholder="Start speaking or typing..."
-              className="flex-1 text-lg md:text-xl resize-none border-0 focus-visible:ring-0 p-8 md:p-10 leading-relaxed placeholder:text-muted-foreground/40 font-normal bg-transparent scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 transition-colors selection:bg-primary/20 selection:text-primary"
+              className="flex-1 text-lg md:text-xl resize-none border-0 focus-visible:ring-0 p-8 md:p-10 pb-20 leading-relaxed placeholder:text-muted-foreground/40 font-normal bg-transparent scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 transition-colors selection:bg-primary/20 selection:text-primary"
               aria-label="Transcription output"
               aria-live="polite"
               spellCheck={false}
             />
 
-            {/* Floating Action Button for TTS/Copy - visible on hover or when has text */}
-            <div className="absolute bottom-6 right-6 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-               <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      className="rounded-full shadow-lg bg-background/80 backdrop-blur-sm hover:bg-primary hover:text-primary-foreground transition-all"
-                      onClick={handleSpeak}
-                      disabled={!displayText}
-                    >
-                      {isPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{isPlaying ? "Stop Speaking" : "Read Aloud"}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+            {/* Status Bar & Actions */}
+            <div className="absolute bottom-0 left-0 right-0 h-14 bg-white/40 dark:bg-black/40 backdrop-blur-md border-t border-white/10 flex items-center justify-between px-6 transition-transform duration-300 transform translate-y-0">
+              <div className="flex items-center gap-6 text-xs font-medium text-muted-foreground">
+                <div className="flex items-center gap-2" title="Word Count">
+                  <AlignLeft className="w-3.5 h-3.5 opacity-70" />
+                  <span>{wordCount} words</span>
+                </div>
+                <div className="flex items-center gap-2" title="Character Count">
+                  <Type className="w-3.5 h-3.5 opacity-70" />
+                  <span>{charCount} chars</span>
+                </div>
+                <div className="flex items-center gap-2" title="Estimated Reading Time">
+                  <Clock className="w-3.5 h-3.5 opacity-70" />
+                  <span>{readingTime} min read</span>
+                </div>
+              </div>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      className="rounded-full shadow-lg bg-background/80 backdrop-blur-sm hover:bg-primary hover:text-primary-foreground transition-all"
-                      onClick={handleCopyText}
-                      disabled={!displayText}
-                    >
-                      <Copy className="w-4 h-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Copy Text</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <div className="flex items-center gap-1">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors"
+                        onClick={handleSpeak}
+                        disabled={!displayText}
+                      >
+                        {isPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      <p>{isPlaying ? "Stop Speaking" : "Read Aloud"}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
 
-               <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      className="rounded-full shadow-lg bg-background/80 backdrop-blur-sm hover:bg-destructive hover:text-destructive-foreground transition-all"
-                      onClick={() => setShowClearDialog(true)}
-                      disabled={!displayText}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Clear Text</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                <div className="w-px h-4 bg-border mx-1" />
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 rounded-lg hover:bg-primary/10 hover:text-primary transition-colors"
+                        onClick={handleCopyText}
+                        disabled={!displayText}
+                      >
+                        <Copy className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      <p>Copy Text</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 rounded-lg hover:bg-destructive/10 hover:text-destructive transition-colors"
+                        onClick={() => setShowClearDialog(true)}
+                        disabled={!displayText}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">
+                      <p>Clear Text</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
           </div>
         </Card>

@@ -175,8 +175,41 @@ export function useSpeechToTextManager() {
     }
     try {
       const doc = new jsPDF();
-      const splitText = doc.splitTextToSize(textToSave, 180);
-      doc.text(splitText, 10, 10);
+      
+      // Add title
+      doc.setFontSize(16);
+      doc.text("Transcription", 10, 15);
+      
+      // Add metadata
+      doc.setFontSize(10);
+      doc.setTextColor(100);
+      doc.text(`Date: ${new Date().toLocaleString()}`, 10, 22);
+      doc.text(`Language: ${selectedLanguage}`, 10, 27);
+      
+      // Add content
+      doc.setFontSize(12);
+      doc.setTextColor(0);
+      
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const margin = 10;
+      const maxWidth = pageWidth - (margin * 2);
+      const startY = 35;
+      const lineHeight = 7;
+      
+      const splitText = doc.splitTextToSize(textToSave, maxWidth);
+      
+      let cursorY = startY;
+      
+      splitText.forEach((line: string) => {
+        if (cursorY + lineHeight > pageHeight - margin) {
+          doc.addPage();
+          cursorY = margin + 5; // Reset to top of new page
+        }
+        doc.text(line, margin, cursorY);
+        cursorY += lineHeight;
+      });
+      
       doc.save(`transcript-${new Date().getTime()}.pdf`);
       toast.success("PDF exported successfully");
       
@@ -186,7 +219,7 @@ export function useSpeechToTextManager() {
       console.error(error);
       toast.error("Failed to export PDF");
     }
-  }, [displayText, addToHistory]);
+  }, [displayText, addToHistory, selectedLanguage]);
 
   const handleClearText = useCallback((): void => {
     if (displayText.trim()) {

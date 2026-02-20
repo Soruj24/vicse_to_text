@@ -112,6 +112,7 @@ export function SpeechToText() {
             onOpenFindReplace={() => setIsFindReplaceOpen(true)}
             isFocusMode={isFocusMode}
             onToggleFocusMode={() => setIsFocusMode(!isFocusMode)}
+            displayText={displayText}
           />
         </motion.div>
       </div>

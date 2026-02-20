@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Mic, Square, Download, FileText, FileDown, Search, Maximize, Minimize } from "lucide-react";
+import { Mic, Square, Download, FileText, FileDown, Search, Maximize, Minimize, Share2, Printer, Mail, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Tooltip,
@@ -7,6 +7,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 interface ToolControlsProps {
   isListening: boolean;
@@ -17,6 +24,7 @@ interface ToolControlsProps {
   onOpenFindReplace: () => void;
   isFocusMode: boolean;
   onToggleFocusMode: () => void;
+  displayText?: string; // Added to support sharing
 }
 
 export function ToolControls({
@@ -28,7 +36,49 @@ export function ToolControls({
   onOpenFindReplace,
   isFocusMode,
   onToggleFocusMode,
+  displayText = "",
 }: ToolControlsProps) {
+
+  const handleShare = async () => {
+    if (!displayText.trim()) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Transcription',
+          text: displayText,
+        });
+        toast.success("Shared successfully");
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    } else {
+      navigator.clipboard.writeText(displayText);
+      toast.success("Copied to clipboard");
+    }
+  };
+
+  const handlePrint = () => {
+    if (!displayText.trim()) return;
+    const printWindow = window.open('', '', 'height=600,width=800');
+    if (printWindow) {
+      printWindow.document.write('<html><head><title>Print Transcription</title>');
+      printWindow.document.write('</head><body style="font-family: sans-serif; padding: 20px; line-height: 1.6;">');
+      printWindow.document.write('<h1 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">Transcription</h1>');
+      printWindow.document.write(`<div style="white-space: pre-wrap;">${displayText}</div>`);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+    }
+  };
+
+  const handleEmail = () => {
+    if (!displayText.trim()) return;
+    const subject = encodeURIComponent("Transcription");
+    const body = encodeURIComponent(displayText.substring(0, 2000)); // Limit length
+    window.location.href = `mailto:?subject=${subject}&body=${body}...`;
+  };
+
   return (
     <div className="relative z-10 p-6 md:p-8 bg-white/40 dark:bg-black/20 border-t border-white/10 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-8 rounded-b-[2.5rem] shadow-2xl mt-[-20px] pt-12 ring-1 ring-black/5 dark:ring-white/10 transition-all duration-500">
       
@@ -50,23 +100,56 @@ export function ToolControls({
         )}
       </AnimatePresence>
 
-      {/* Left Actions (File Operations) */}
+      {/* Left Actions (Export & Share) */}
       <div className="flex-1 flex justify-start gap-3 order-2 md:order-1 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
         <div className="flex items-center gap-2 bg-white/30 dark:bg-black/30 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-sm ring-1 ring-white/5">
-          <TooltipButton
-            onClick={handleSaveText}
-            icon={<FileText className="w-4 h-4" />}
-            label="Save TXT"
-            disabled={!hasText}
-            tooltip="Download as Text"
-          />
-          <TooltipButton
-            onClick={handleExportPDF}
-            icon={<FileDown className="w-4 h-4" />}
-            label="Export PDF"
-            disabled={!hasText}
-            tooltip="Download as PDF"
-          />
+          
+          {/* Export Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" disabled={!hasText} className="rounded-xl h-9 px-3 gap-2 font-medium text-xs md:text-sm hover:bg-primary/10 hover:text-primary">
+                <Download className="w-4 h-4" />
+                <span>Export</span>
+                <ChevronUp className="w-3 h-3 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-48 bg-white/90 dark:bg-black/90 backdrop-blur-xl border-white/10">
+              <DropdownMenuItem onClick={handleSaveText} className="cursor-pointer gap-2">
+                <FileText className="w-4 h-4 opacity-70" />
+                <span>Text File (.txt)</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleExportPDF} className="cursor-pointer gap-2">
+                <FileDown className="w-4 h-4 opacity-70" />
+                <span>PDF Document (.pdf)</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handlePrint} className="cursor-pointer gap-2">
+                <Printer className="w-4 h-4 opacity-70" />
+                <span>Print</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Share Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" disabled={!hasText} className="rounded-xl h-9 px-3 gap-2 font-medium text-xs md:text-sm hover:bg-primary/10 hover:text-primary">
+                <Share2 className="w-4 h-4" />
+                <span>Share</span>
+                <ChevronUp className="w-3 h-3 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-48 bg-white/90 dark:bg-black/90 backdrop-blur-xl border-white/10">
+              <DropdownMenuItem onClick={handleShare} className="cursor-pointer gap-2">
+                <Share2 className="w-4 h-4 opacity-70" />
+                <span>Share App / Copy</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleEmail} className="cursor-pointer gap-2">
+                <Mail className="w-4 h-4 opacity-70" />
+                <span>Email</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
         </div>
       </div>
 
