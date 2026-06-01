@@ -96,9 +96,9 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
       variants={container}
       initial="hidden"
       animate="show"
-      className="flex flex-wrap items-center gap-3 mb-4 p-3 bg-white/40 dark:bg-black/20 border border-white/10 rounded-2xl backdrop-blur-xl w-fit shadow-lg ring-1 ring-black/5 dark:ring-white/10"
+      className="flex flex-wrap items-center gap-3 mb-4 p-3 bg-black/20 border border-white/10 rounded-2xl backdrop-blur-xl w-fit shadow-lg ring-1 ring-white/10"
     >
-      <div className="flex items-center gap-2 px-2 border-r border-black/5 dark:border-white/10 mr-1">
+      <div className="flex items-center gap-2 px-2 border-r border-white/10 mr-1">
         <Sparkles className="w-4 h-4 text-primary animate-pulse" />
         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">AI Tools</span>
       </div>
@@ -120,7 +120,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
               Advanced <ChevronDown className="w-3 h-3 opacity-50 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-64 rounded-xl p-2 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-white/10 shadow-2xl ring-1 ring-black/5 dark:ring-white/10">
+          <DropdownMenuContent align="end" className="w-64 rounded-xl p-2 bg-black/80 backdrop-blur-xl border-white/10 shadow-2xl ring-1 ring-white/10">
             <DropdownMenuItem 
               className="rounded-lg cursor-pointer focus:bg-primary/10 focus:text-primary py-2 px-3 text-sm font-medium transition-colors"
               onClick={() => handleAIAction("Advanced: Summarize", "Summarize this text into a concise, easy-to-read paragraph capturing the main points.")}
@@ -285,7 +285,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
               Translate <ChevronDown className="w-3 h-3 opacity-50 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 rounded-xl p-2 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-white/10 shadow-2xl ring-1 ring-black/5 dark:ring-white/10">
+          <DropdownMenuContent align="end" className="w-48 rounded-xl p-2 bg-black/80 backdrop-blur-xl border-white/10 shadow-2xl ring-1 ring-white/10">
             {["English", "Spanish", "French", "German", "Bengali", "Hindi"].map((lang) => (
               <DropdownMenuItem 
                 key={lang}
@@ -316,7 +316,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
               More <ChevronDown className="w-3 h-3 opacity-50 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 rounded-xl p-2 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-white/10 shadow-2xl ring-1 ring-black/5 dark:ring-white/10">
+          <DropdownMenuContent align="end" className="w-56 rounded-xl p-2 bg-black/80 backdrop-blur-xl border-white/10 shadow-2xl ring-1 ring-white/10">
             <DropdownMenuItem 
               className="rounded-lg cursor-pointer focus:bg-primary/10 focus:text-primary py-2 px-3 text-sm font-medium transition-colors"
               onClick={() => handleAIAction("Summarize", "Summarize this text in a concise bulleted list")}

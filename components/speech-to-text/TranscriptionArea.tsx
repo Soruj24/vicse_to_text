@@ -122,7 +122,7 @@ export function TranscriptionArea({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <Card className="relative overflow-hidden border-0 shadow-2xl rounded-[2rem] bg-white/40 dark:bg-black/20 backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/10 group transition-all duration-500 hover:shadow-primary/5">
+        <Card className="relative overflow-hidden border-0 shadow-2xl rounded-[2rem] bg-black/20 backdrop-blur-xl ring-1 ring-white/10 group transition-all duration-500 hover:shadow-primary/5">
           {/* Subtle gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           
@@ -166,7 +166,7 @@ export function TranscriptionArea({
             </AnimatePresence>
 
             {/* Status Bar & Actions */}
-            <div className="absolute bottom-0 left-0 right-0 h-14 bg-white/40 dark:bg-black/40 backdrop-blur-md border-t border-white/10 flex items-center justify-between px-6 transition-transform duration-300 transform translate-y-0">
+            <div className="absolute bottom-0 left-0 right-0 h-14 bg-black/40 backdrop-blur-md border-t border-white/10 flex items-center justify-between px-6 transition-transform duration-300 transform translate-y-0">
               <div className="flex items-center gap-6 text-xs font-medium text-muted-foreground">
                 <div className="flex items-center gap-2" title="Word Count">
                   <AlignLeft className="w-3.5 h-3.5 opacity-70" />

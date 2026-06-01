@@ -23,7 +23,7 @@ export function SessionStats({
   };
 
   return (
-    <Card className="hidden lg:block shadow-xl border-white/5 overflow-hidden rounded-3xl bg-white/40 dark:bg-black/20 backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/10">
+    <Card className="hidden lg:block shadow-xl border-white/5 overflow-hidden rounded-3xl bg-black/20 backdrop-blur-xl ring-1 ring-white/10">
       <CardHeader className="pb-3 bg-white/5 py-5 px-6 border-b border-white/5">
         <CardTitle className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80 flex items-center gap-3">
           <Timer className="w-4 h-4 text-primary" />

@@ -80,7 +80,7 @@ export function ToolControls({
   };
 
   return (
-    <div className="relative z-10 p-6 md:p-8 bg-white/40 dark:bg-black/20 border-t border-white/10 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-8 rounded-b-[2.5rem] shadow-2xl mt-[-20px] pt-12 ring-1 ring-black/5 dark:ring-white/10 transition-all duration-500">
+    <div className="relative z-10 p-6 md:p-8 bg-black/20 border-t border-white/10 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-8 rounded-b-[2.5rem] shadow-2xl mt-[-20px] pt-12 ring-1 ring-white/10 transition-all duration-500">
       
       {/* Recording Status Indicator - Only visible when recording */}
       <AnimatePresence>
@@ -102,7 +102,7 @@ export function ToolControls({
 
       {/* Left Actions (Export & Share) */}
       <div className="flex-1 flex justify-start gap-3 order-2 md:order-1 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-        <div className="flex items-center gap-2 bg-white/30 dark:bg-black/30 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-sm ring-1 ring-white/5">
+        <div className="flex items-center gap-2 bg-black/30 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-sm ring-1 ring-white/5">
           
           {/* Export Dropdown */}
           <DropdownMenu>
@@ -113,7 +113,7 @@ export function ToolControls({
                 <ChevronUp className="w-3 h-3 opacity-50" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48 bg-white/90 dark:bg-black/90 backdrop-blur-xl border-white/10">
+            <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-xl border-white/10">
               <DropdownMenuItem onClick={handleSaveText} className="cursor-pointer gap-2">
                 <FileText className="w-4 h-4 opacity-70" />
                 <span>Text File (.txt)</span>
@@ -138,7 +138,7 @@ export function ToolControls({
                 <ChevronUp className="w-3 h-3 opacity-50" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48 bg-white/90 dark:bg-black/90 backdrop-blur-xl border-white/10">
+            <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-xl border-white/10">
               <DropdownMenuItem onClick={handleShare} className="cursor-pointer gap-2">
                 <Share2 className="w-4 h-4 opacity-70" />
                 <span>Share App / Copy</span>
@@ -217,7 +217,7 @@ export function ToolControls({
 
       {/* Right Actions (View/Search) */}
       <div className="flex-1 flex justify-end gap-3 order-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-         <div className="flex items-center gap-2 bg-white/30 dark:bg-black/30 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-sm ring-1 ring-white/5">
+         <div className="flex items-center gap-2 bg-black/30 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-sm ring-1 ring-white/5">
           <TooltipButton
             onClick={onOpenFindReplace}
             icon={<Search className="w-4 h-4" />}

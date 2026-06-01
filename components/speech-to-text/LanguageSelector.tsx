@@ -30,7 +30,7 @@ export function LanguageSelector({
   isListening,
 }: LanguageSelectorProps) {
   return (
-    <Card className="shadow-xl border-white/5 overflow-hidden rounded-2xl md:rounded-3xl bg-white/40 dark:bg-black/20 backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/10">
+    <Card className="shadow-xl border-white/5 overflow-hidden rounded-2xl md:rounded-3xl bg-black/20 backdrop-blur-xl ring-1 ring-white/10">
       <CardHeader className="pb-3 bg-white/5 py-3 md:py-5 px-4 md:px-6 border-b border-white/5">
         <CardTitle className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80 flex items-center gap-2 md:gap-3">
           <Languages className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary" />
