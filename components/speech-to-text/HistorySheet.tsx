@@ -10,9 +10,8 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { History, Trash2, RotateCcw, Copy, Calendar, Clock, MessageSquare, ChevronRight } from "lucide-react";
+import { History, Trash2, RotateCcw, Copy, Calendar, Clock } from "lucide-react";
 import { HistoryItem } from "@/hooks/useSpeechToTextManager";
-import { formatDistanceToNow } from "date-fns";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -38,21 +37,21 @@ export function HistorySheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="w-full h-14 gap-3 rounded-2xl border-2 hover:border-primary/50 text-base font-semibold shadow-sm transition-all group bg-card hover:bg-accent/50">
-          <div className="p-2 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+        <Button variant="outline" className="w-full h-14 gap-3 rounded-lg border-2 border-border hover:border-primary/30 text-base font-semibold shadow-xs transition-all group bg-card hover:bg-muted/50">
+          <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
             <History className="w-5 h-5 text-primary" />
           </div>
           <span>View History</span>
-          <Badge variant="secondary" className="ml-auto bg-secondary/50 group-hover:bg-secondary transition-colors">
+          <Badge variant="secondary" className="ml-auto bg-muted group-hover:bg-accent transition-colors">
             {history.length}
           </Badge>
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:w-[540px] border-l border-white/10 bg-background/80 backdrop-blur-xl p-0">
-        <SheetHeader className="px-6 py-6 border-b border-white/5 space-y-1">
+      <SheetContent className="w-full sm:w-[540px] border-l border-border bg-popover p-0">
+        <SheetHeader className="px-6 py-6 border-b border-border space-y-1">
           <SheetTitle className="flex items-center justify-between text-xl font-bold">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-primary/10">
+              <div className="p-2 rounded-lg bg-primary/10">
                 <History className="w-5 h-5 text-primary" />
               </div>
               Transcript History
@@ -68,7 +67,7 @@ export function HistorySheet({
               </Button>
             )}
           </SheetTitle>
-          <SheetDescription className="text-muted-foreground/80 pl-[52px]">
+          <SheetDescription className="text-muted-foreground pl-[52px]">
             Your recent transcriptions are saved here locally.
           </SheetDescription>
         </SheetHeader>
@@ -76,10 +75,10 @@ export function HistorySheet({
         <ScrollArea className="h-[calc(100vh-140px)] px-6">
           {history.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-[60vh] text-center gap-4 p-8">
-              <div className="w-20 h-20 rounded-full bg-muted/50 flex items-center justify-center mb-4">
-                <History className="w-10 h-10 text-muted-foreground/30" />
+              <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-4">
+                <History className="w-10 h-10 text-muted-foreground/40" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground/80">No History Yet</h3>
+              <h3 className="text-lg font-semibold">No History Yet</h3>
               <p className="text-sm text-muted-foreground max-w-[250px]">
                 Start recording or typing to automatically save your transcripts here.
               </p>
@@ -94,7 +93,7 @@ export function HistorySheet({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="group relative p-5 rounded-2xl border border-white/5 bg-gradient-to-br from-card to-card/50 hover:to-accent/50 shadow-sm hover:shadow-md transition-all duration-300"
+                    className="group relative p-5 rounded-xl border border-border bg-card hover:border-primary/20 shadow-sm hover:shadow-md transition-all duration-300"
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
@@ -102,12 +101,12 @@ export function HistorySheet({
                           {item.language}
                         </Badge>
                         <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3 opacity-70" />
+                          <Calendar className="w-3 h-3 opacity-60" />
                           {new Date(item.date).toLocaleDateString()}
                         </span>
                         <span className="w-1 h-1 rounded-full bg-border" />
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3 opacity-70" />
+                          <Clock className="w-3 h-3 opacity-60" />
                           {new Date(item.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -116,7 +115,7 @@ export function HistorySheet({
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-7 w-7 rounded-lg hover:bg-primary/10 hover:text-primary"
+                          className="h-7 w-7 rounded-lg hover:bg-muted"
                           onClick={() => handleCopy(item.text)}
                           title="Copy to Clipboard"
                         >
@@ -138,13 +137,12 @@ export function HistorySheet({
                       <p className="text-sm leading-relaxed text-foreground/90 line-clamp-3 font-medium group-hover:line-clamp-none transition-all duration-300">
                         {item.text}
                       </p>
-                      <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-card to-transparent group-hover:hidden pointer-events-none" />
                     </div>
 
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full mt-4 h-9 rounded-xl text-xs font-medium bg-secondary/30 hover:bg-primary hover:text-primary-foreground opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      className="w-full mt-4 h-9 rounded-lg text-xs font-medium bg-muted hover:bg-primary hover:text-primary-foreground opacity-0 group-hover:opacity-100 transition-all duration-300"
                       onClick={() => onLoad(item.text)}
                     >
                       <RotateCcw className="w-3.5 h-3.5 mr-2" />

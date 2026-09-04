@@ -17,7 +17,7 @@ export function SpeechToText() {
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [isFindReplaceOpen, setIsFindReplaceOpen] = useState(false);
 
-  const { 
+  const {
     setConvertedText,
     selectedLanguage,
     setSelectedLanguage,
@@ -45,7 +45,7 @@ export function SpeechToText() {
   }
 
   return (
-    <div className={`max-w-6xl mx-auto px-4 md:px-6 transition-all duration-500 ${isFocusMode ? 'py-4' : 'py-6 md:py-16'}`} id="tool">
+    <div className={`max-w-5xl mx-auto px-4 md:px-6 transition-all duration-500 ${isFocusMode ? 'py-4' : 'py-8 md:py-16'}`} id="tool">
       <AnimatePresence>
         {!isFocusMode && (
           <motion.div
@@ -59,27 +59,27 @@ export function SpeechToText() {
         )}
       </AnimatePresence>
 
-      <div className={`grid grid-cols-1 ${isFocusMode ? 'lg:grid-cols-1' : 'lg:grid-cols-4'} gap-6 md:gap-10`}>
+      <div className={`grid grid-cols-1 ${isFocusMode ? 'lg:grid-cols-1' : 'lg:grid-cols-4'} gap-6 md:gap-8`}>
         <AnimatePresence>
           {!isFocusMode && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20, width: 0 }}
-              className="lg:col-span-1 space-y-4 md:space-y-8"
+              className="lg:col-span-1 space-y-4 md:space-y-6"
             >
               <LanguageSelector
                 selectedLanguage={selectedLanguage}
                 setSelectedLanguage={setSelectedLanguage}
                 isListening={isListening}
               />
-              
+
               <SessionStats
                 wordCount={wordCount}
                 recordingDuration={recordingDuration}
                 confidence={confidence}
               />
-              
+
               <HistorySheet
                 history={history}
                 onLoad={setConvertedText}
@@ -90,7 +90,7 @@ export function SpeechToText() {
           )}
         </AnimatePresence>
 
-        <motion.div 
+        <motion.div
           layout
           className={`${isFocusMode ? 'lg:col-span-1 max-w-4xl mx-auto w-full' : 'lg:col-span-3'} space-y-5 md:space-y-8 transition-all duration-500`}
         >
@@ -122,7 +122,7 @@ export function SpeechToText() {
         onOpenChange={setShowClearDialog}
         onConfirm={handleClearText}
       />
-      
+
       <FindReplace
         isOpen={isFindReplaceOpen}
         onOpenChange={setIsFindReplaceOpen}

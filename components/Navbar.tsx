@@ -23,26 +23,26 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
+        "fixed top-0 w-full z-50 transition-all duration-300",
         scrolled
-          ? "bg-background/70 backdrop-blur-xl border-border/10 shadow-lg supports-[backdrop-filter]:bg-background/60"
+          ? "bg-background/85 backdrop-blur-xl border-b border-border shadow-xs"
           : "bg-transparent"
       )}
     >
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-3">
           <MobileMenu />
           <Logo />
         </div>
-        
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium">
           <NavLinks />
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link href="#tool">
-            <Button size="sm" className="rounded-full px-6 font-semibold shadow-lg shadow-primary/20 bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-700 transition-all hover:scale-105 active:scale-95 text-white border-0">
+            <Button size="sm" className="rounded-md px-5 font-semibold shadow-xs">
               Get Started
             </Button>
           </Link>

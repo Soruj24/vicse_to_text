@@ -24,7 +24,7 @@ interface ToolControlsProps {
   onOpenFindReplace: () => void;
   isFocusMode: boolean;
   onToggleFocusMode: () => void;
-  displayText?: string; // Added to support sharing
+  displayText?: string;
 }
 
 export function ToolControls({
@@ -43,10 +43,7 @@ export function ToolControls({
     if (!displayText.trim()) return;
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: 'Transcription',
-          text: displayText,
-        });
+        await navigator.share({ title: 'Transcription', text: displayText });
         toast.success("Shared successfully");
       } catch (err) {
         console.error("Error sharing:", err);
@@ -75,105 +72,93 @@ export function ToolControls({
   const handleEmail = () => {
     if (!displayText.trim()) return;
     const subject = encodeURIComponent("Transcription");
-    const body = encodeURIComponent(displayText.substring(0, 2000)); // Limit length
+    const body = encodeURIComponent(displayText.substring(0, 2000));
     window.location.href = `mailto:?subject=${subject}&body=${body}...`;
   };
 
   return (
-    <div className="relative z-10 p-6 md:p-8 bg-black/20 border-t border-white/10 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-8 rounded-b-[2.5rem] shadow-2xl mt-[-20px] pt-12 ring-1 ring-white/10 transition-all duration-500">
+    <div className="relative z-10 p-6 md:p-8 bg-card border border-border rounded-xl shadow-xs flex flex-col md:flex-row items-center justify-between gap-6 transition-all duration-300">
       
-      {/* Recording Status Indicator - Only visible when recording */}
+      {/* Recording Status Indicator */}
       <AnimatePresence>
         {isListening && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="absolute -top-24 left-1/2 transform -translate-x-1/2 bg-red-500/10 backdrop-blur-md border border-red-500/20 px-6 py-2 rounded-full flex items-center gap-3 z-20 shadow-xl shadow-red-500/5"
+            className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-destructive/10 border border-destructive/20 px-4 py-1.5 rounded-full flex items-center gap-2 z-20 shadow-sm"
           >
-            <span className="relative flex h-3 w-3">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
             </span>
-            <span className="text-sm font-bold text-red-500 tracking-wide uppercase text-[10px]">Recording in progress</span>
+            <span className="text-xs font-bold text-red-500 tracking-wide">Recording</span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Left Actions (Export & Share) */}
+      {/* Left Actions */}
       <div className="flex-1 flex justify-start gap-3 order-2 md:order-1 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-        <div className="flex items-center gap-2 bg-black/30 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-sm ring-1 ring-white/5">
-          
-          {/* Export Dropdown */}
+        <div className="flex items-center gap-1.5 bg-muted/50 p-1.5 rounded-lg border border-border">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" disabled={!hasText} className="rounded-xl h-9 px-3 gap-2 font-medium text-xs md:text-sm hover:bg-primary/10 hover:text-primary">
-                <Download className="w-4 h-4" />
+              <Button variant="ghost" size="sm" disabled={!hasText} className="rounded-md h-8 px-3 gap-1.5 font-medium text-xs hover:bg-muted transition-colors">
+                <Download className="w-3.5 h-3.5" />
                 <span>Export</span>
                 <ChevronUp className="w-3 h-3 opacity-50" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-xl border-white/10">
-              <DropdownMenuItem onClick={handleSaveText} className="cursor-pointer gap-2">
-                <FileText className="w-4 h-4 opacity-70" />
+            <DropdownMenuContent align="start" className="w-44 rounded-lg border border-shadow-lg p-1">
+              <DropdownMenuItem onClick={handleSaveText} className="cursor-pointer gap-2 py-1.5 px-2.5 text-xs">
+                <FileText className="w-3.5 h-3.5 opacity-70" />
                 <span>Text File (.txt)</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleExportPDF} className="cursor-pointer gap-2">
-                <FileDown className="w-4 h-4 opacity-70" />
+              <DropdownMenuItem onClick={handleExportPDF} className="cursor-pointer gap-2 py-1.5 px-2.5 text-xs">
+                <FileDown className="w-3.5 h-3.5 opacity-70" />
                 <span>PDF Document (.pdf)</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handlePrint} className="cursor-pointer gap-2">
-                <Printer className="w-4 h-4 opacity-70" />
+              <DropdownMenuItem onClick={handlePrint} className="cursor-pointer gap-2 py-1.5 px-2.5 text-xs">
+                <Printer className="w-3.5 h-3.5 opacity-70" />
                 <span>Print</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Share Dropdown */}
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" disabled={!hasText} className="rounded-xl h-9 px-3 gap-2 font-medium text-xs md:text-sm hover:bg-primary/10 hover:text-primary">
-                <Share2 className="w-4 h-4" />
+              <Button variant="ghost" size="sm" disabled={!hasText} className="rounded-md h-8 px-3 gap-1.5 font-medium text-xs hover:bg-muted transition-colors">
+                <Share2 className="w-3.5 h-3.5" />
                 <span>Share</span>
                 <ChevronUp className="w-3 h-3 opacity-50" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48 bg-black/90 backdrop-blur-xl border-white/10">
-              <DropdownMenuItem onClick={handleShare} className="cursor-pointer gap-2">
-                <Share2 className="w-4 h-4 opacity-70" />
-                <span>Share App / Copy</span>
+            <DropdownMenuContent align="start" className="w-44 rounded-lg border border-shadow-lg p-1">
+              <DropdownMenuItem onClick={handleShare} className="cursor-pointer gap-2 py-1.5 px-2.5 text-xs">
+                <Share2 className="w-3.5 h-3.5 opacity-70" />
+                <span>Share / Copy</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleEmail} className="cursor-pointer gap-2">
-                <Mail className="w-4 h-4 opacity-70" />
+              <DropdownMenuItem onClick={handleEmail} className="cursor-pointer gap-2 py-1.5 px-2.5 text-xs">
+                <Mail className="w-3.5 h-3.5 opacity-70" />
                 <span>Email</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
         </div>
       </div>
 
-      {/* Main Recording Button - Center Stage */}
+      {/* Main Recording Button */}
       <div className="flex-1 flex justify-center order-1 md:order-2 -mt-12 md:-mt-16 z-20">
         <motion.div
-          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="relative group"
         >
-          {/* Pulsing rings when recording */}
           {isListening && (
             <>
               <motion.div
                 initial={{ opacity: 0.5, scale: 1 }}
                 animate={{ opacity: 0, scale: 1.5 }}
                 transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-                className="absolute inset-0 rounded-full bg-red-500/30 z-0 blur-xl"
-              />
-              <motion.div
-                initial={{ opacity: 0.5, scale: 1 }}
-                animate={{ opacity: 0, scale: 1.3 }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut", delay: 0.5 }}
-                className="absolute inset-0 rounded-full bg-red-500/20 z-0 blur-md"
+                className="absolute inset-0 rounded-full bg-red-500/20 z-0 blur-lg"
               />
             </>
           )}
@@ -181,58 +166,32 @@ export function ToolControls({
           <Button
             size="lg"
             onClick={toggleListening}
-            className={`relative z-10 rounded-full w-20 h-20 md:w-24 md:h-24 flex flex-col items-center justify-center gap-2 shadow-2xl transition-all duration-500 ${
+            className={`relative z-10 rounded-full w-16 h-16 md:w-20 md:h-20 flex items-center justify-center shadow-sm transition-all duration-300 ${
               isListening
-                ? "bg-red-500 hover:bg-red-600 text-white border-4 border-red-200/20 shadow-red-500/30"
-                : "bg-gradient-to-br from-primary to-blue-600 hover:from-primary/90 hover:to-blue-700 text-white border-4 border-white/10 shadow-primary/30"
+                ? "bg-red-500 hover:bg-red-600 text-white shadow-md shadow-red-500/20"
+                : "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/20"
             }`}
           >
             <AnimatePresence mode="wait">
               {isListening ? (
-                <motion.div
-                  key="stop"
-                  initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
-                >
-                  <Square className="w-8 h-8 fill-current" />
+                <motion.div key="stop" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }}>
+                  <Square className="w-7 h-7 fill-current" />
                 </motion.div>
               ) : (
-                <motion.div
-                  key="start"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                >
-                  <Mic className="w-8 h-8" />
+                <motion.div key="start" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }}>
+                  <Mic className="w-7 h-7" />
                 </motion.div>
               )}
             </AnimatePresence>
           </Button>
-          <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity text-xs font-bold tracking-wider text-muted-foreground pointer-events-none bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10 shadow-lg">
-            {isListening ? "STOP RECORDING" : "START RECORDING"}
-          </div>
         </motion.div>
       </div>
 
-      {/* Right Actions (View/Search) */}
+      {/* Right Actions */}
       <div className="flex-1 flex justify-end gap-3 order-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-         <div className="flex items-center gap-2 bg-black/30 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 shadow-sm ring-1 ring-white/5">
-          <TooltipButton
-            onClick={onOpenFindReplace}
-            icon={<Search className="w-4 h-4" />}
-            label="Find"
-            disabled={!hasText}
-            tooltip="Find & Replace"
-          />
-          <TooltipButton
-            onClick={onToggleFocusMode}
-            icon={isFocusMode ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
-            label={isFocusMode ? "Exit" : "Focus"}
-            disabled={false}
-            tooltip={isFocusMode ? "Exit Focus Mode" : "Enter Focus Mode"}
-            variant={isFocusMode ? "secondary" : "ghost"}
-          />
+        <div className="flex items-center gap-1.5 bg-muted/50 p-1.5 rounded-lg border border-border">
+          <TooltipButton onClick={onOpenFindReplace} icon={<Search className="w-3.5 h-3.5" />} label="Find" disabled={!hasText} tooltip="Find & Replace" />
+          <TooltipButton onClick={onToggleFocusMode} icon={isFocusMode ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />} label={isFocusMode ? "Exit" : "Focus"} disabled={false} tooltip={isFocusMode ? "Exit Focus Mode" : "Enter Focus Mode"} variant={isFocusMode ? "secondary" : "ghost"} />
         </div>
       </div>
     </div>
@@ -258,8 +217,8 @@ function TooltipButton({ onClick, disabled, icon, label, tooltip, variant = "gho
             variant={variant}
             onClick={onClick}
             disabled={disabled}
-            className={`rounded-xl transition-all duration-300 h-9 px-3 gap-2 font-medium text-xs md:text-sm ${
-              variant === "ghost" ? "hover:bg-primary/10 hover:text-primary" : ""
+            className={`rounded-md transition-all duration-200 h-8 px-3 gap-1.5 font-medium text-xs ${
+              variant === "ghost" ? "hover:bg-muted" : ""
             }`}
           >
             {icon}

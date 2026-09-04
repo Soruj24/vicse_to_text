@@ -1,10 +1,11 @@
 "use client"
 
-import { Toaster as Sonner, ToasterProps } from "sonner"
+import * as React from "react"
+import * as ToastPrimitive from "sonner"
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = ({ ...props }: ToastPrimitive.ToasterProps) => {
   return (
-    <Sonner
+    <ToastPrimitive.Toaster
       theme="dark"
       className="toaster group"
       style={

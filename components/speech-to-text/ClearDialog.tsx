@@ -1,13 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 interface ClearDialogProps {
   open: boolean;
@@ -22,26 +13,22 @@ export function ClearDialog({
 }: ClearDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="rounded-[2rem] p-8 border-white/10 bg-background/90 backdrop-blur-xl shadow-2xl">
+      <AlertDialogContent className="rounded-xl p-8 border border-border shadow-xl">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-2xl font-bold flex flex-col items-center gap-4 text-center">
-            <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center mb-2">
-              <span className="text-3xl">🗑️</span>
-            </div>
+          <AlertDialogTitle className="text-xl font-bold text-center">
             Clear everything?
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-lg text-center max-w-[300px] mx-auto leading-relaxed">
-            This will permanently delete your current transcript. This action
-            cannot be undone.
+          <AlertDialogDescription className="text-base text-center max-w-xs mx-auto leading-relaxed">
+            This will permanently delete your current transcript. This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="mt-8 gap-3 sm:gap-4 flex-col sm:flex-row">
-          <AlertDialogCancel className="h-12 rounded-xl font-semibold border-2 hover:bg-secondary/80 transition-colors w-full sm:w-auto">
+        <AlertDialogFooter className="mt-6 gap-2 sm:gap-3 flex-col sm:flex-row">
+          <AlertDialogCancel className="h-11 rounded-lg font-semibold border hover:bg-muted transition-colors w-full sm:w-auto">
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
-            className="h-12 rounded-xl font-bold bg-destructive text-destructive-foreground hover:bg-destructive/90 w-full sm:w-auto shadow-lg shadow-destructive/20"
+            className="h-11 rounded-lg font-bold bg-destructive text-destructive-foreground hover:bg-destructive/90 w-full sm:w-auto shadow-xs shadow-destructive/20"
           >
             Yes, Clear All
           </AlertDialogAction>

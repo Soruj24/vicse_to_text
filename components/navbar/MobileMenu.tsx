@@ -26,18 +26,16 @@ export function MobileMenu() {
           <Menu className="w-6 h-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-        <SheetHeader>
-          <SheetTitle className="text-left">
-            <Logo />
-          </SheetTitle>
+      <SheetContent side="left" className="w-[280px] sm:w-[320px]">
+        <SheetHeader className="pb-4 border-b border-border">
+          <SheetTitle className="text-left"><Logo /></SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col gap-6 mt-10">
+        <div className="flex flex-col gap-4 mt-6">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-lg font-medium hover:text-primary transition-colors px-2 py-1"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-2 rounded-md hover:bg-muted/50"
             >
               {link.label}
             </Link>

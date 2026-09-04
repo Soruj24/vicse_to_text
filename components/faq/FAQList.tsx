@@ -16,17 +16,17 @@ interface FAQListProps {
 
 export function FAQList({ faqs }: FAQListProps) {
   return (
-    <Accordion type="single" collapsible className="w-full space-y-4">
+    <Accordion type="single" collapsible className="w-full">
       {faqs.map((faq, index) => (
         <AccordionItem
           key={index}
           value={`item-${index}`}
-          className="border border-border bg-background rounded-2xl px-6"
+          className="border-b border-border bg-card last:border-b-0"
         >
-          <AccordionTrigger className="text-left font-semibold py-6 hover:no-underline">
+          <AccordionTrigger className="text-left font-medium py-4 hover:no-underline">
             {faq.question}
           </AccordionTrigger>
-          <AccordionContent className="text-muted-foreground pb-6 leading-relaxed">
+          <AccordionContent className="text-muted-foreground pb-4 leading-relaxed">
             {faq.answer}
           </AccordionContent>
         </AccordionItem>

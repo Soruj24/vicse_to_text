@@ -1,21 +1,34 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 export function ThemeToggle() {
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const saved = document.documentElement.getAttribute("data-theme");
+    setIsDark(saved === "dark" || saved !== "light");
+  }, []);
+
+  useEffect(() => {
+    const newTheme = isDark ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    try {
+      localStorage.setItem("theme", newTheme);
+    } catch {}
+  }, [isDark]);
+
   return (
-    <div className="relative">
-      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/50 bg-black/20 text-white">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-[1.2rem] w-[1.2rem]"
-        >
-          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-        </svg>
-        <span className="sr-only">Dark mode</span>
-      </div>
-    </div>
-  )
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setIsDark(!isDark)}
+      className="h-9 w-9 rounded-lg hover:bg-muted transition-colors"
+    >
+      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      <span className="sr-only">Toggle theme</span>
+    </Button>
+  );
 }
