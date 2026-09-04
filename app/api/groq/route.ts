@@ -9,11 +9,10 @@ export async function POST(req: Request) {
     }
     const result = await generateWithGroq(prompt);
     return NextResponse.json({ result });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("GROQ API Error:", error);
-    return NextResponse.json(
-      { error: error.message || "Failed to generate response" },
-      { status: 500 }
-    );
+    const message =
+      error instanceof Error ? error.message : "Failed to generate response";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
