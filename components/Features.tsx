@@ -46,11 +46,11 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="py-20 md:py-32 bg-secondary/20">
-      <div className="container mx-auto px-6">
+    <section id="features" className="section-spacing bg-muted">
+      <div className="section-container">
         <FeaturesHeader />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <FeatureCard key={index} {...feature} />
           ))}

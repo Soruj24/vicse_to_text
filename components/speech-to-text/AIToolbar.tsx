@@ -77,7 +77,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
     >
       <div className="flex items-center gap-2 px-2 border-r border-border mr-1">
         <Sparkles className="w-3.5 h-3.5 text-primary" />
-        <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">AI Tools</span>
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">AI Tools</span>
       </div>
 
       <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
@@ -88,7 +88,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
               Advanced <ChevronDown className="w-3 h-3 opacity-50 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 rounded-lg p-1.5 border border-shadow-lg">
+          <DropdownMenuContent align="end" className="w-56 rounded-lg p-1.5 border border-border">
             {[
               { key: "Summarize", icon: FileText, label: "Summarize", prompt: "Summarize this text into a concise, easy-to-read paragraph capturing the main points." },
               { key: "Smart Format", icon: LayoutTemplate, label: "Smart Format", prompt: "Reformat this text into a clean, structured document." },
@@ -115,7 +115,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
               Ask AI
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] rounded-xl border border-shadow-lg">
+          <DialogContent className="sm:max-w-[425px] rounded-xl border border-border">
             <DialogHeader>
               <DialogTitle>Ask AI</DialogTitle>
               <DialogDescription>Give any instruction to the AI about your text.</DialogDescription>
@@ -155,7 +155,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
               Translate <ChevronDown className="w-3 h-3 opacity-50 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-44 rounded-lg p-1.5 border border-shadow-lg">
+          <DropdownMenuContent align="end" className="w-44 rounded-lg p-1.5 border border-border">
             {["English", "Spanish", "French", "German", "Bengali", "Hindi"].map((lang) => (
               <DropdownMenuItem key={lang} className="rounded-md cursor-pointer focus:bg-accent focus:text-accent-foreground py-1.5 px-3 text-xs" onClick={() => handleAIAction("Translate to " + lang, `Translate this text to ${lang}`)}>
                 {lang}
@@ -173,7 +173,7 @@ export function AIToolbar({ text, onTextUpdate }: AIToolbarProps) {
               More <ChevronDown className="w-3 h-3 opacity-50 ml-1" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-52 rounded-lg p-1.5 border border-shadow-lg">
+          <DropdownMenuContent align="end" className="w-52 rounded-lg p-1.5 border border-border">
             {[
               { key: "Summarize", icon: FileOutput, label: "Summarize" },
               { key: "Email", icon: Mail, label: "Format as Email" },

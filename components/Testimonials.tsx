@@ -37,11 +37,11 @@ export function Testimonials() {
   ];
 
   return (
-    <section id="testimonials" className="py-24 bg-background">
-      <div className="container px-4 mx-auto">
+    <section id="testimonials" className="section-spacing bg-background">
+      <div className="section-container">
         <TestimonialHeader />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {testimonials.map((item, index) => (
             <TestimonialCard key={index} {...item} />
           ))}

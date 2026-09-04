@@ -33,8 +33,8 @@ export function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-secondary/20">
-      <div className="container px-4 mx-auto max-w-4xl">
+    <section id="faq" className="section-spacing bg-muted">
+      <div className="section-container max-w-4xl">
         <FAQHeader />
         <FAQList faqs={faqs} />
       </div>

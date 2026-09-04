@@ -31,8 +31,8 @@ export function LanguageSelector({
 }: LanguageSelectorProps) {
   return (
     <Card className="shadow-xs border border-border overflow-hidden rounded-xl">
-      <CardHeader className="pb-2 bg-muted/30 py-3 px-4 border-b border-border">
-        <CardTitle className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/70 flex items-center gap-2">
+      <CardHeader className="pb-2 py-3 px-4 border-b border-border">
+        <CardTitle className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground flex items-center gap-2">
           <Languages className="w-3 h-3 text-primary" />
           Select Language
         </CardTitle>
@@ -43,7 +43,7 @@ export function LanguageSelector({
           onValueChange={setSelectedLanguage}
           disabled={isListening}
         >
-          <SelectTrigger className="w-full h-10 rounded-lg text-sm bg-background/50 border border-input hover:bg-background/80 transition-colors focus:ring-primary/20">
+          <SelectTrigger className="w-full h-10 rounded-lg text-sm bg-background border border-border hover:bg-muted transition-colors focus:ring-primary/20">
             <SelectValue placeholder="Select Language" />
           </SelectTrigger>
           <SelectContent className="bg-popover border border-border rounded-lg">

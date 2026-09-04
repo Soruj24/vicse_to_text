@@ -35,14 +35,14 @@ export function Navbar() {
           <Logo />
         </div>
 
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+        <div className="hidden md:flex items-center gap-8">
           <NavLinks />
         </div>
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link href="#tool">
-            <Button size="sm" className="rounded-md px-5 font-semibold shadow-xs">
+            <Button size="sm" className="rounded-md px-5 font-medium shadow-xs">
               Get Started
             </Button>
           </Link>

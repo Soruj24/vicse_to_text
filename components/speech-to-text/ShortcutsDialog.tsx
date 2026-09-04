@@ -26,7 +26,7 @@ export function ShortcutsDialog() {
           <span className="hidden md:inline">Shortcuts</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] rounded-xl border border-shadow-lg">
+        <DialogContent className="sm:max-w-[425px] rounded-xl border border-border">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <div className="p-2 rounded-md bg-primary/10">
@@ -38,9 +38,9 @@ export function ShortcutsDialog() {
         </DialogHeader>
         <div className="grid gap-2 py-4">
           {shortcuts.map((shortcut, index) => (
-            <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border hover:bg-muted/50 transition-colors">
+            <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-muted border border-border hover:bg-muted transition-colors">
               <span className="text-sm text-muted-foreground">{shortcut.description}</span>
-              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background/50 px-1.5 font-mono text-[10px] text-muted-foreground shadow-sm">
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] text-muted-foreground shadow-sm">
                 {shortcut.key}
               </kbd>
             </div>

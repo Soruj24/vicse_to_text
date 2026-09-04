@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -92,25 +93,37 @@ export function TranscriptionArea({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <Card className="relative overflow-hidden border border-border shadow-xs rounded-xl bg-card group transition-all duration-300 hover:shadow-sm">
-          <div className="absolute inset-0 bg-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <Card className="relative overflow-hidden border border-border shadow-xs rounded-xl bg-card group transition-all duration-300 hover:shadow-md">
+          <div className="absolute inset-0 bg-background opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-          <div className="relative h-[50vh] flex flex-col">
-            <div className="h-16 w-full opacity-50 flex-shrink-0">
+          <div className="relative flex flex-col" style={{ minHeight: "350px" }}>
+            <div className="h-16 w-full flex-shrink-0">
               <AudioVisualizer isListening={isListening} />
             </div>
 
-            <Textarea
-              ref={textareaRef}
-              value={displayText}
-              onChange={(e) => setConvertedText(e.target.value)}
-              onScroll={handleScroll}
-              placeholder="Start speaking or typing..."
-              className="flex-1 h-full text-lg md:text-xl resize-none border-0 focus-visible:ring-0 p-6 md:p-8 pb-40 leading-relaxed placeholder:text-muted-foreground/50 font-normal bg-transparent scrollbar-thin selection:bg-primary/20 selection:text-primary"
-              aria-label="Transcription output"
-              aria-live="polite"
-              spellCheck={false}
-            />
+            {displayText.length === 0 && !isListening ? (
+              <div className="flex-1 flex items-center justify-center p-6 md:p-8">
+                <div className="text-center space-y-3">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center mb-4">
+                    <Mic className="w-8 h-8 text-muted-foreground opacity-50" />
+                  </div>
+                  <p className="text-muted-foreground text-sm">Your transcription will appear here</p>
+                  <p className="text-muted-foreground/60 text-xs">Click the microphone or start typing</p>
+                </div>
+              </div>
+            ) : (
+              <Textarea
+                ref={textareaRef}
+                value={displayText}
+                onChange={(e) => setConvertedText(e.target.value)}
+                onScroll={handleScroll}
+                placeholder="Start speaking or typing..."
+                className="flex-1 min-h-[200px] text-lg md:text-xl resize-none border-0 focus-visible:ring-0 p-4 md:p-6 pb-40 leading-relaxed placeholder:text-muted-foreground/50 font-normal bg-transparent scrollbar-thin selection:bg-primary/20 selection:text-primary"
+                aria-label="Transcription output"
+                aria-live="polite"
+                spellCheck={false}
+              />
+            )}
 
             <AnimatePresence>
               {showScrollButton && (
@@ -123,11 +136,11 @@ export function TranscriptionArea({
               )}
             </AnimatePresence>
 
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-card/80 backdrop-blur-sm border-t border-border flex items-center justify-between px-6">
-              <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground">
-                <div className="flex items-center gap-2"><AlignLeft className="w-3 h-3 opacity-70" /><span>{wordCount} words</span></div>
-                <div className="flex items-center gap-2"><Type className="w-3 h-3 opacity-70" /><span>{charCount} chars</span></div>
-                <div className="flex items-center gap-2"><Clock className="w-3 h-3 opacity-70" /><span>{readingTime} min read</span></div>
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-background backdrop-blur-sm border-t border-border flex items-center justify-between px-4 md:px-6">
+              <div className="flex items-center gap-3 md:gap-4 text-xs font-medium text-muted-foreground">
+                <div className="flex items-center gap-1.5"><AlignLeft className="w-3 h-3 opacity-60" /><span>{wordCount} words</span></div>
+                <div className="hidden md:flex items-center gap-1.5"><Type className="w-3 h-3 opacity-60" /><span>{charCount} chars</span></div>
+                <div className="hidden md:flex items-center gap-1.5"><Clock className="w-3 h-3 opacity-60" /><span>{readingTime} min read</span></div>
               </div>
 
               <div className="flex items-center gap-1">
@@ -142,7 +155,7 @@ export function TranscriptionArea({
                   </Tooltip>
                 </TooltipProvider>
 
-                <div className="w-px h-3 bg-border mx-1" />
+                <div className="w-px h-3 bg-border mx-0.5" />
 
                 <TooltipProvider>
                   <Tooltip>

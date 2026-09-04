@@ -15,10 +15,10 @@ export function NavLinks() {
         <Link
           key={link.href}
           href={link.href}
-          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
+          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group py-1"
         >
           {link.label}
-          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+          <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
         </Link>
       ))}
     </>

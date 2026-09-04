@@ -4,16 +4,16 @@ import { HeroBadge, HeroActions } from "./hero/HeroBadge";
 
 export function Hero() {
   return (
-    <section className="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
-        <div className="absolute top-[-5%] left-[-5%] w-[50%] md:w-[35%] h-[35%] bg-primary/5 blur-[80px] md:blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-5%] right-[-5%] w-[50%] md:w-[35%] h-[35%] bg-primary/5 blur-[80px] md:blur-[120px] rounded-full" />
+    <section className="relative pt-24 md:pt-32 pb-16 md:pb-24 overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-[10%] left-[5%] w-[60%] md:w-[40%] h-[40%] bg-primary/[0.04] blur-[100px] rounded-full" />
+        <div className="absolute bottom-[10%] right-[5%] w-[60%] md:w-[40%] h-[40%] bg-primary/[0.04] blur-[100px] rounded-full" />
       </div>
 
-      <div className="container mx-auto px-4 text-center">
+      <div className="section-container text-center">
         <HeroBadge />
 
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 md:mb-8 leading-[1.05] px-2">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 md:mb-8 leading-[1.1] px-4">
           Transform Your Voice into <br className="hidden md:block" />
           <span className="text-primary">Flawless Text</span> Instantly
         </h1>
@@ -25,13 +25,15 @@ export function Hero() {
 
         <HeroActions />
 
-        <div className="mt-16 md:mt-24 pt-8 border-t border-border/50">
-          <p className="text-[10px] md:text-xs font-bold text-muted-foreground/50 mb-8 md:mb-10 uppercase tracking-[0.3em]">Trusted worldwide by</p>
+        <div className="mt-20 md:mt-28 pt-10 border-t border-border/50">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-8">
+            Trusted worldwide by
+          </p>
           <div className="flex flex-wrap items-center justify-center gap-x-8 md:gap-x-20 opacity-40">
-            <span className="text-xl md:text-3xl font-black tracking-tighter">TECHCORP</span>
-            <span className="text-xl md:text-3xl font-black tracking-tighter">STUDIO</span>
-            <span className="text-xl md:text-3xl font-black tracking-tighter">GLOBAL</span>
-            <span className="text-xl md:text-3xl font-black tracking-tighter">INNOVATE</span>
+            <span className="text-lg md:text-2xl font-bold tracking-tight">TECHCORP</span>
+            <span className="text-lg md:text-2xl font-bold tracking-tight">STUDIO</span>
+            <span className="text-lg md:text-2xl font-bold tracking-tight">GLOBAL</span>
+            <span className="text-lg md:text-2xl font-bold tracking-tight">INNOVATE</span>
           </div>
         </div>
       </div>

@@ -45,7 +45,7 @@ export function SpeechToText() {
   }
 
   return (
-    <div className={`max-w-5xl mx-auto px-4 md:px-6 transition-all duration-500 ${isFocusMode ? 'py-4' : 'py-8 md:py-16'}`} id="tool">
+    <div className={`max-w-5xl mx-auto px-4 md:px-6 transition-all duration-500 ${isFocusMode ? 'py-4' : 'py-8 md:py-12'}`} id="tool">
       <AnimatePresence>
         {!isFocusMode && (
           <motion.div

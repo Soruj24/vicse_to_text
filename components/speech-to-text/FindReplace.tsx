@@ -68,7 +68,7 @@ export function FindReplace({
             <Label htmlFor="find" className="text-sm text-muted-foreground">Find</Label>
             <div className="relative group">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              <Input id="find" value={findText} onChange={(e) => setFindText(e.target.value)} className="pl-9 bg-background border-input focus:bg-card" placeholder="Text to find..." />
+              <Input id="find" value={findText} onChange={(e) => setFindText(e.target.value)} className="pl-9 bg-background border-border focus:bg-card" placeholder="Text to find..." />
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export function FindReplace({
             <Label htmlFor="replace" className="text-sm text-muted-foreground">Replace with</Label>
             <div className="relative group">
               <Replace className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              <Input id="replace" value={replaceText} onChange={(e) => setReplaceText(e.target.value)} className="pl-9 bg-background border-input focus:bg-card" placeholder="Replacement text..." />
+              <Input id="replace" value={replaceText} onChange={(e) => setReplaceText(e.target.value)} className="pl-9 bg-background border-border focus:bg-card" placeholder="Replacement text..." />
             </div>
           </div>
 
@@ -88,7 +88,7 @@ export function FindReplace({
 
         <DialogFooter className="gap-2 sm:gap-0">
           <Button variant="ghost" onClick={() => onOpenChange(false)} className="rounded-lg">Cancel</Button>
-          <Button onClick={handleReplace} className="rounded-lg gap-2 shadow-xs shadow-primary/10">
+          <Button onClick={handleReplace} className="rounded-lg gap-2 shadow-xs">
             <Check className="w-4 h-4" />
             Replace All
           </Button>

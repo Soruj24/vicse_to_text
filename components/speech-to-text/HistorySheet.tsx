@@ -37,7 +37,7 @@ export function HistorySheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="w-full h-14 gap-3 rounded-lg border-2 border-border hover:border-primary/30 text-base font-semibold shadow-xs transition-all group bg-card hover:bg-muted/50">
+        <Button variant="outline" className="w-full h-14 gap-3 rounded-lg border-2 border-border hover:border-primary/30 text-base font-semibold shadow-xs transition-all group bg-card hover:bg-muted">
           <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
             <History className="w-5 h-5 text-primary" />
           </div>
@@ -49,7 +49,7 @@ export function HistorySheet({
       </SheetTrigger>
       <SheetContent className="w-full sm:w-[540px] border-l border-border bg-popover p-0">
         <SheetHeader className="px-6 py-6 border-b border-border space-y-1">
-          <SheetTitle className="flex items-center justify-between text-xl font-bold">
+          <SheetTitle className="flex items-center justify-between text-xl font-semibold">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-primary/10">
                 <History className="w-5 h-5 text-primary" />
@@ -97,7 +97,7 @@ export function HistorySheet({
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                        <Badge variant="outline" className="rounded-md px-2 py-0 h-6 border-primary/20 bg-primary/5 text-primary font-normal">
+                        <Badge variant="outline" className="rounded-md px-2 py-0 h-6 border-primary/20 bg-primary/10 text-primary font-medium">
                           {item.language}
                         </Badge>
                         <span className="flex items-center gap-1">

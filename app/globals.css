@@ -39,17 +39,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes pulse-ring {
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(1.5); opacity: 0; }
-  }
-  --animate-fade-in: fade-in 0.5s ease-out forwards;
-  --animate-pulse-ring: pulse-ring 1.5s ease-out infinite;
 }
 
 :root {
@@ -90,6 +79,8 @@
   --success-foreground: oklch(0.99 0.01 270);
   --warning: oklch(0.70 0.15 50);
   --warning-foreground: oklch(0.99 0.01 270);
+  --info: oklch(0.55 0.15 220);
+  --info-foreground: oklch(0.99 0.01 270);
 }
 
 :root[data-theme="dark"] {
@@ -130,6 +121,8 @@
   --success-foreground: oklch(0.99 0.01 270);
   --warning: oklch(0.65 0.15 50);
   --warning-foreground: oklch(0.99 0.01 270);
+  --info: oklch(0.65 0.15 220);
+  --info-foreground: oklch(0.99 0.01 270);
 }
 
 body {
@@ -143,6 +136,27 @@ body {
   }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .section-spacing {
+    @apply py-24 md:py-32;
+  }
+  .section-container {
+    @apply container mx-auto px-4 md:px-6 lg:px-8;
+  }
+  .section-header {
+    @apply text-center max-w-2xl mx-auto mb-16 md:mb-20;
+  }
+  .section-eyebrow {
+    @apply text-sm font-semibold uppercase tracking-widest text-primary mb-4;
+  }
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4;
+  }
+  .section-description {
+    @apply text-base md:text-lg text-muted-foreground leading-relaxed;
   }
 }
 
@@ -162,6 +176,40 @@ body {
     background-color: var(--muted);
     border-radius: 9999px;
   }
+  .skeleton {
+    background: linear-gradient(90deg, var(--muted) 25%, var(--border) 50%, var(--muted) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: var(--radius);
+  }
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s ease-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -171,4 +219,11 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.skip-link {
+  @apply absolute -top-10 left-0 bg-primary text-primary-foreground px-4 py-2 z-[100] rounded-b-lg transition-all duration-300;
+}
+.skip-link:focus {
+  @apply top-0;
 }

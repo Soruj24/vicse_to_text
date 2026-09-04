@@ -30,17 +30,17 @@ export function MobileMenu() {
         <SheetHeader className="pb-4 border-b border-border">
           <SheetTitle className="text-left"><Logo /></SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col gap-4 mt-6">
+        <nav className="flex flex-col gap-2 mt-6">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-2 rounded-md hover:bg-muted/50"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2.5 rounded-lg hover:bg-muted"
             >
               {link.label}
             </Link>
           ))}
-        </div>
+        </nav>
       </SheetContent>
     </Sheet>
   );

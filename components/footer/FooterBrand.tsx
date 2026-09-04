@@ -10,17 +10,17 @@ export function FooterBrand() {
       <div className="mb-4">
         <Logo />
       </div>
-      <p className="text-muted-foreground mb-6 max-w-xs text-sm">
+      <p className="text-muted-foreground mb-6 max-w-xs text-sm leading-relaxed">
         A powerful platform to transform your ideas into text at the speed of thought.
       </p>
-      <div className="flex gap-3">
-        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors w-9 h-9 rounded-lg bg-muted flex items-center justify-center">
+      <div className="flex gap-2">
+        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors w-9 h-9 rounded-lg bg-muted flex items-center justify-center" aria-label="Twitter">
           <Twitter className="w-4 h-4" />
         </Link>
-        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors w-9 h-9 rounded-lg bg-muted flex items-center justify-center">
+        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors w-9 h-9 rounded-lg bg-muted flex items-center justify-center" aria-label="GitHub">
           <Github className="w-4 h-4" />
         </Link>
-        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors w-9 h-9 rounded-lg bg-muted flex items-center justify-center">
+        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors w-9 h-9 rounded-lg bg-muted flex items-center justify-center" aria-label="LinkedIn">
           <Linkedin className="w-4 h-4" />
         </Link>
       </div>

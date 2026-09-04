@@ -9,10 +9,13 @@ import { SpeechToText } from "@/components/SpeechToText";
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
+      <a href="#tool" className="skip-link">
+        Skip to tool
+      </a>
       <Navbar />
       <Hero />
-      <section id="tool" className="py-16 md:py-24 bg-background relative">
-        <div className="container mx-auto px-4 relative">
+      <section id="tool" className="section-spacing bg-background relative">
+        <div className="section-container relative">
           <SpeechToText />
         </div>
       </section>
